@@ -69,12 +69,14 @@
         let ul = document.createElement('ul');
         for (let i = 0; i < list.length; i++) {
           if (list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue != 'index.html') {
+            let source = document.createElement('source');
             let player = document.createElement('video');
             let ahref = document.createElement('a');
             let li = document.createElement('li');
-            player.src = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+            source.src = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue + '#t=10';
             ahref.innerText = list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
             ahref.href = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+            player.appendChild(source);
             li.appendChild(player);
             li.appendChild(ahref);
             ul.appendChild(li);
