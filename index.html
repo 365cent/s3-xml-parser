@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mist</title>
+  <style>
+    body {
+      display: grid;
+      grid-template-rows: 3em auto 3em;
+      height: 100vh;
+      font-family: "Calibre", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+    }
+
+    header,
+    main,
+    footer {
+      width: 96%;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    main {
+      padding: 2em 0;
+    }
+
+    a {
+      color: #007aff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #409cff;
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
+      grid-gap: 1em;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Index of /mist</h1>
+  </header>
+  <main></main>
+  <footer>&copy; Liberty Network</footer>
+  <script>
+    const url = 'https://mist.us-east-1.linodeobjects.com/';
+    fetch(url)
+      .then(response => response.text())
+      .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+      .then(data => {
+        let list = data.documentElement.getElementsByTagName('Contents');
+        let ul = document.createElement('ul');
+        for (let i = 0; i < list.length; i++) {
+          console.log(list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue);
+          let player = document.createElement('video');
+          let ahref = document.createElement('a');
+          let li = document.createElement('li');
+          player.src = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+          ahref.innerText = list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+          ahref.href = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+          li.appendChild(player);
+          li.appendChild(ahref);
+          ul.appendChild(li);
+        }
+        document.getElementsByTagName('main')[0].appendChild(ul);
+      });
+  </script>
+
+</body>
+
+</html>
