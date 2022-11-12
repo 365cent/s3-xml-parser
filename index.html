@@ -60,7 +60,7 @@
   <main></main>
   <footer>&copy; Liberty Network</footer>
   <script>
-    const url = 'https://mist.us-east-1.linodeobjects.com/';
+    const url = '/'; // path to xml file
     fetch(url)
       .then(response => response.text())
       .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
@@ -68,16 +68,17 @@
         let list = data.documentElement.getElementsByTagName('Contents');
         let ul = document.createElement('ul');
         for (let i = 0; i < list.length; i++) {
-          console.log(list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue);
-          let player = document.createElement('video');
-          let ahref = document.createElement('a');
-          let li = document.createElement('li');
-          player.src = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
-          ahref.innerText = list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
-          ahref.href = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
-          li.appendChild(player);
-          li.appendChild(ahref);
-          ul.appendChild(li);
+          if (list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue != 'index.html') {
+            let player = document.createElement('video');
+            let ahref = document.createElement('a');
+            let li = document.createElement('li');
+            player.src = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+            ahref.innerText = list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+            ahref.href = url + list[i].getElementsByTagName('Key')[0].childNodes[0].nodeValue;
+            li.appendChild(player);
+            li.appendChild(ahref);
+            ul.appendChild(li);
+          }
         }
         document.getElementsByTagName('main')[0].appendChild(ul);
       });
